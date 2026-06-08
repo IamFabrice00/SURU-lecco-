@@ -930,7 +930,7 @@
             <button class="nav-btn" id="btnLeft" onclick="goBack()">‹</button>
             <div class="book" id="book">
                 
-                <div class="sheet" id="cover" onclick="if(bookState===0) goForward()">
+                <div class="sheet" id="cover" onclick="handleCoverClick(event)">
                     <div class="face front cover-front">
                         <div class="cover-content">
                             <h1>SURU<br>restaurant</h1>
@@ -1010,9 +1010,9 @@
                     </div>
                 </div>
 
-                <div class="sheet" id="sheet2">
+                <div class="sheet" id="sheet2" onclick="handleSheet2Click(event)">
                     <div class="face front right-page">
-                        <div class="page-content" onclick="if(bookState===1) goForward()">
+                        <div class="page-content">
                             <h2 class="menu-section-title">DRINKS & MOCKTAILS</h2>
                             <div class="menu-item">
                                 <div class="menu-item-header"><span class="menu-item-name">Bissap</span><span class="menu-item-price">6,00€</span></div>
@@ -1263,44 +1263,77 @@
 
         // --- 3D Book Menu Logic ---
         let bookState = 0;
+        let isFlipping = false;
         const cover = document.getElementById('cover');
         const sheet2 = document.getElementById('sheet2');
         const sheet3 = document.getElementById('sheet3');
         const btnLeft = document.getElementById('btnLeft');
         const btnRight = document.getElementById('btnRight');
 
-        function goForward() {
+        function handleCoverClick(event) {
+            if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON') return;
             if (bookState === 0) {
+                goForward();
+            } else if (bookState === 1) {
+                goBack();
+            }
+        }
+
+        function handleSheet2Click(event) {
+            if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON') return;
+            if (bookState === 1) {
+                goForward();
+            } else if (bookState === 2) {
+                goBack();
+            }
+        }
+
+        function goForward() {
+            if (isFlipping) return;
+            if (bookState === 0) {
+                isFlipping = true;
                 cover.classList.add('flipping');
                 cover.classList.add('flipped');
                 cover.style.zIndex = '4';
-                setTimeout(() => cover.style.zIndex = '1', 600);
+                setTimeout(() => {
+                    cover.style.zIndex = '1';
+                    isFlipping = false;
+                }, 600);
                 bookState = 1;
             } else if (bookState === 1) {
+                isFlipping = true;
                 sheet2.classList.add('flipping');
                 sheet2.classList.add('flipped');
                 sheet2.style.zIndex = '4';
-                setTimeout(() => sheet2.style.zIndex = '2', 600);
+                setTimeout(() => {
+                    sheet2.style.zIndex = '2';
+                    isFlipping = false;
+                }, 600);
                 bookState = 2;
             }
             updateNav();
         }
 
         function goBack() {
+            if (isFlipping) return;
             if (bookState === 2) {
+                isFlipping = true;
                 sheet2.style.zIndex = '4';
                 sheet2.classList.remove('flipped');
                 setTimeout(() => {
                     sheet2.classList.remove('flipping');
                     sheet2.style.zIndex = '2';
+                    isFlipping = false;
                 }, 600);
                 bookState = 1;
             } else if (bookState === 1) {
+                isFlipping = true;
                 cover.style.zIndex = '4';
                 cover.classList.remove('flipped');
                 setTimeout(() => {
                     cover.classList.remove('flipping');
                     cover.style.zIndex = '3';
+                    isFlipping = false;
                 }, 600);
                 bookState = 0;
             }
