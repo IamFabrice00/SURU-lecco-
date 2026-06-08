@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suru Restaurant - Mory Sacko</title>
+    
+    <!-- Google Fonts: Cormorant Garamond per i titoli, Jost per il corpo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #FFFFFF;
+            --bg-dark: #0D0D0D;
+            --text-color: #1A1A1A;
+            --text-light: #FFFFFF;
+            --accent-green: #27ae60;
+            --accent-orange: #e67e22;
+            --font-title: 'Cormorant Garamond', serif;
+            --font-body: 'Jost', sans-serif;
+            --padding-section: 10vw;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Typography */
+        h1, h2, h3, .title {
+            font-family: var(--font-title);
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        a:hover {
+            opacity: 0.7;
+            color: var(--accent-orange);
+        }
+
+        .label-uppercase {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .text-centered {
+            max-width: 520px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-link {
+            display: inline-block;
+            border-bottom: 1px dashed currentColor;
+            padding-bottom: 4px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .cta-link:hover {
+            transform: translateY(-3px);
+            border-bottom-style: solid;
+            color: var(--accent-orange);
+            border-color: var(--accent-orange);
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            z-index: 1000;
+            transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Cloche icon */
+        .logo-cloche {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+        .logo-steam {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 2px;
+        }
+        .logo-steam span {
+            width: 2px;
+            height: 6px;
+            background: var(--accent-orange);
+            border-radius: 1px;
+        }
+        .logo-steam span:nth-child(2) { height: 8px; }
+        .logo-lid {
+            width: 28px;
+            height: 3px;
+            background: var(--accent-orange);
+            border-radius: 1px;
+            position: relative;
+        }
+        .logo-lid::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 3px;
+            border-bottom: 2px solid var(--accent-orange);
+            border-radius: 0 0 50% 50%;
+        }
+
+        /* SURU text */
+        .logo-text {
+            font-family: var(--font-title);
+            font-size: 28px;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--accent-orange);
+            line-height: 1;
+            margin-top: 2px;
+        }
+
+        /* RESTAURANT subtitle */
+        .logo-subtitle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 1px;
+        }
+        .logo-subtitle-line {
+            width: 14px;
+            height: 1px;
+            background: var(--accent-orange);
+            opacity: 0.6;
+        }
+        .logo-subtitle-text {
+            font-family: var(--font-body);
+            font-size: 7px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent-orange);
+            opacity: 0.8;
+        }
+
+        .nav-logo img {
+            display: none;
+        }
+
+        .lang-toggle {
+            cursor: pointer;
+            font-weight: 400;
+            padding: 0.2rem 0.5rem;
+            border: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        
+        .lang-toggle:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger div {
+            width: 28px;
+            height: 1px;
+            background-color: currentColor;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Utilities */
+        .section {
+            padding: var(--padding-section) 5%;
+        }
+
+        .full-width-img {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            display: block;
+            object-fit: cover;
+        }
+
+        .dark-section {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        .mt-4 { margin-top: 2rem; }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Specific Sections */
+        /* Hero Image */
+        .hero-img {
+            height: 100vh;
+            object-fit: cover;
+        }
+
+        /* Hero GIF */
+        .hero-gif-section {
+            position: relative;
+            text-align: center;
+            padding: 8vw 0;
+        }
+
+        .hero-gif-section img {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .time-temp {
+            position: absolute;
+            bottom: 3rem;
+            right: 5%;
+            text-align: right;
+            font-family: var(--font-title);
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            font-style: italic;
+            background: rgba(255,255,255,0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Logo GIF & Intro */
+        .logo-gif-container {
+            text-align: center;
+            padding: var(--padding-section) 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .logo-gif-container img {
+            max-width: 350px;
+            width: 100%;
+        }
+
+        /* Sense Blocks */
+        .sense-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: var(--padding-section);
+        }
+
+        .sense-symbol {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            line-height: 1;
+            color: var(--accent-green);
+        }
+
+        .sense-text {
+            font-family: var(--font-title);
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            max-width: 700px;
+            margin-bottom: 3rem;
+            font-style: italic;
+            line-height: 1.3;
+        }
+
+        .sense-img, .sense-video {
+            max-width: 100%;
+            width: 450px;
+            object-fit: cover;
+        }
+
+        .spotify-embed {
+            margin-top: 1rem;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        /* Two columns layout */
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Menus */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 900px;
+            margin: 6rem auto 0;
+        }
+
+        .menu-item {
+            text-align: center;
+        }
+
+        .menu-symbol {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-orange);
+        }
+        
+        .menu-title {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            font-style: italic;
+            margin: 1.5rem 0;
+        }
+
+        /* Reservation */
+        .zenchef-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            height: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .zenchef-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Omotenashi Block */
+        .omotenashi-block {
+            text-align: center;
+            margin: 6rem auto;
+            font-family: var(--font-title);
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-style: italic;
+            max-width: 800px;
+            line-height: 1.4;
+        }
+
+        /* Footer */
+        footer {
+            padding: var(--padding-section) 5% 4rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .newsletter-form input[type="email"] {
+            flex: 1;
+            padding: 0.8rem 0;
+            border: none;
+            border-bottom: 1px solid currentColor;
+            background: transparent;
+            color: inherit;
+            outline: none;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            min-width: 200px;
+        }
+        
+        .newsletter-form input::placeholder {
+            color: currentColor;
+            opacity: 0.5;
+        }
+
+        .newsletter-form button {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid currentColor;
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+            color: inherit;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.8rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            opacity: 1;
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .footer-links a {
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .two-cols {
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .two-cols {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 5rem;
+            }
+            
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+
+            .time-temp {
+                bottom: 1rem;
+                right: 1rem;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Drawer Menu for Mobile */
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--bg-color);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            transition: right 0.4s ease;
+        }
+
+        .mobile-drawer.open {
+            right: 0;
+        }
+
+        .mobile-drawer a {
+            font-size: 1.5rem;
+            font-family: var(--font-title);
+            font-style: italic;
+        }
+        
+        .hamburger.active div:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active div:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Menu 3D Book CSS */
+        .book-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .book {
+            position: relative;
+            width: 720px;
+            height: 520px;
+            perspective: 2000px;
+            transform-style: preserve-3d;
+            box-shadow: -4px 0 12px rgba(0,0,0,0.12), 4px 0 12px rgba(0,0,0,0.08);
+            border-radius: 4px;
+        }
+        .book::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 8px;
+            height: 100%;
+            background: #2a1f0e;
+            transform: translateX(-50%) skewY(-1deg);
+            z-index: 0;
+        }
+        .sheet {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        .face {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            overflow: hidden;
+        }
+        .front { z-index: 2; }
+        .back { transform: rotateY(180deg); z-index: 1; }
+        .flipped { transform: rotateY(-180deg); cursor: default; }
+        .flipping { transition: transform 600ms cubic-bezier(0.645, 0.045, 0.355, 1.000); }
+
+        .cover-front, .cover-back {
+            background-color: #1a1208;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0 4px 4px 0;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.04) 1px, rgba(255,255,255,0.04) 2px);
+        }
+        .cover-front h1 {
+            font-family: var(--font-title);
+            font-size: 42px;
+            font-weight: 300;
+            font-style: italic;
+            text-align: center;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+        .cover-subtitle {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        .cover-year { font-size: 11px; opacity: 0.5; }
+        .cover-hint {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 11px;
+            opacity: 0.5;
+        }
+
+        .left-page {
+            background: #fdfaf4;
+            color: #1a1a1a;
+            border-left: 1px solid rgba(0,0,0,0.08);
+            border-radius: 4px 0 0 4px;
+        }
+        .right-page {
+            background: #fdfaf4;
+            color: #1a1a1a;
+            border-right: 1px solid rgba(0,0,0,0.08);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .page-content {
+            padding: 30px;
+            height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+        .page-content::-webkit-scrollbar { width: 4px; }
+        .page-content::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); }
+
+        .page-number {
+            position: absolute;
+            bottom: 15px;
+            font-family: var(--font-body);
+            font-size: 11px;
+            opacity: 0.35;
+        }
+        .left-page .page-number { left: 20px; }
+        .right-page .page-number { right: 20px; }
+
+        .menu-section-title {
+            font-family: var(--font-title);
+            font-size: 20px;
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: 0.03em;
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--accent-orange);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+        .menu-section-title:first-child { margin-top: 0; }
+        
+        .menu-item { margin-bottom: 15px; }
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-family: var(--font-body);
+        }
+        .menu-item-name { font-size: 13px; font-weight: 400; color: #1a1a1a;}
+        .menu-item-price { font-size: 13px; font-weight: 400; color: #1a1a1a;}
+        .menu-item-desc {
+            font-size: 11px;
+            font-family: var(--font-title);
+            font-style: italic;
+            opacity: 0.8;
+            line-height: 1.3;
+            margin-top: 4px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            font-size: 28px;
+            color: var(--text-light);
+            opacity: 0.35;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            padding: 10px;
+            z-index: 10;
+        }
+        .nav-btn:hover { opacity: 0.8; }
+
+        @media (max-width: 768px) {
+            .book-container { padding: 0 10px; gap: 5px; }
+            .book { width: 100%; height: 500px; }
+            .sheet { width: 100%; transform-origin: center; }
+            .left-page, .right-page { border-radius: 4px; border: 1px solid rgba(0,0,0,0.08); }
+            .cover-front { border-radius: 4px; }
+            .book::before { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-links label-uppercase">
+            <a href="#lapproach" class="lang-text" data-fr="Le Restaurant" data-en="The Restaurant">Le Restaurant</a>
+            <a href="#offre" class="lang-text" data-fr="Menus" data-en="Menus">Menus</a>
+            <a href="#reservation" class="lang-text" data-fr="Réservation" data-en="Reservation">Réservation</a>
+        </div>
+        
+        <a href="#" class="nav-logo" aria-label="Home">
+            <div class="logo-cloche">
+                <div class="logo-steam"><span></span><span></span><span></span></div>
+                <div class="logo-lid"></div>
+            </div>
+            <div class="logo-text">SŪRU</div>
+            <div class="logo-subtitle">
+                <span class="logo-subtitle-line"></span>
+                <span class="logo-subtitle-text">Restaurant</span>
+                <span class="logo-subtitle-line"></span>
+            </div>
+        </a>
+        
+        <div class="nav-links label-uppercase">
+            <a href="#contact" class="lang-text" data-fr="Contact" data-en="Contact">Contact</a>
+            <span class="lang-toggle" id="lang-toggle">EN</span>
+        </div>
+
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <a href="#lapproach" class="lang-text mobile-link" data-fr="Le Restaurant" data-en="The Restaurant">Le Restaurant</a>
+        <a href="#offre" class="lang-text mobile-link" data-fr="Menus" data-en="Menus">Menus</a>
+        <a href="#reservation" class="lang-text mobile-link" data-fr="Réservation" data-en="Reservation">Réservation</a>
+        <a href="#contact" class="lang-text mobile-link" data-fr="Contact" data-en="Contact">Contact</a>
+        <span class="lang-toggle label-uppercase" id="mobile-lang-toggle" style="margin-top: 2rem;">EN</span>
+    </div>
+
+    <!-- 2. HERO -->
+    <section>
+        <img src="https://images.squarespace-cdn.com/content/v1/6864377a6705f53a7182c13a/f0862f85-64d0-4d5f-85c7-d623260f798c/1.jpg" class="full-width-img hero-img" alt="Hero Suru">
+    </section>
+
+    <!-- 3. HERO GIF -->
+    <section class="hero-gif-section fade-in">
+        <img src="https://images.squarespace-cdn.com/content/v1/6864377a6705f53a7182c13a/b052593a-27e7-4086-826b-f7d498f28881/Hero+LOOP.gif" alt="Suru Ambience">
+        <div class="time-temp" id="time-temp-display">
+            <!-- Time / Temp injected via JS -->
+        </div>
+    </section>
+
+    <!-- 4. LOGO GIF -->
+    <section class="logo-gif-container fade-in">
+        <img src="https://images.squarespace-cdn.com/content/v1/6864377a6705f53a7182c13a/970992d6-6838-4695-a213-0f710e9e42b0/logo.gif" alt="Suru Animated Logo">
+        <div class="text-centered">
+            <p class="label-uppercase mb-4">Via Dei Pescatori 39, Lecco</p>
+            <h2 class="title lang-text" data-fr="Le restaurant s'éveille." data-en="The restaurant awakens." style="margin-bottom: 2rem;">Le restaurant s'éveille.</h2>
+            <img src="images/IMG_3034.jpeg" alt="Degué" style="max-width: 100%; width: 400px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 1rem;">
+        </div>
+    </section>
+
+    <!-- 5. INTRO IMAGE -->
+    <section class="fade-in" style="padding-top: 5vw;">
+        <img src="https://images.squarespace-cdn.com/content/v1/6864377a6705f53a7182c13a/d92d8342-2083-4429-be66-4123badced9d/Intro.jpg" class="full-width-img" alt="Intro Suru">
+    </section>
+
+    <!-- 6. BLOCCO TESTUALE -->
+    <section class="section fade-in">
+        <div class="text-centered">
+            <h2 class="title" style="margin-bottom: 0; line-height: 1.4;">
+                Les gestes, le goût, l'inattendu.<br>
+                Se rassembler, s'aventurer.<br>
+                Se laisser aller au moment présent.
+            </h2>
+        </div>
+    </section>
+
+    <!-- 7. IMMAGINE 2 + CTA -->
+    <section class="section fade-in text-centered" style="padding-top: 0;">
+        <img src="https://images.squarespace-cdn.com/content/v1/6864377a6705f53a7182c13a/56ed6c92-5432-4327-88f6-c40cb8c43122/2.jpg" class="full-width-img" alt="Table preparation" style="margin-bottom: 4rem;">
+        <a href="#reservation" class="cta-link label-uppercase lang-text" data-fr="Réservez votre table" data-en="Book your table">Réservez votre table</a>
+    </section>
+
+    <!-- 8. L'APPROCHE -->
+    <section id="lapproach" class="section fade-in" style="padding-bottom: 0;">
+        <div class="two-cols">
+            <div>
+                <h2 class="title lang-text" style="text-align: left;" data-fr="L'approche Suru" data-en="The Suru Approach">L'approche Suru</h2>
+                <p class="lang-text" data-fr="Nous sommes un petit laboratoire perpétuel. Ici, la cuisine d’auteur puise ses racines en France, en Afrique et au Japon. Nous explorons les croisements, nous jouons sur les équilibres. Nous prenons plaisir à surprendre, tout en conservant une profonde lisibilité dans l’assiette." data-en="We are a small, perpetual laboratory. Here, signature cuisine is rooted in France, Africa, and Japan. We explore intersections, we play on balances. We take pleasure in surprising, while maintaining profound legibility on the plate.">
+                    Nous sommes un petit laboratoire perpétuel. Ici, la cuisine d’auteur puise ses racines en France, en Afrique et au Japon. Nous explorons les croisements, nous jouons sur les équilibres. Nous prenons plaisir à surprendre, tout en conservant une profonde lisibilité dans l’assiette.
+                </p>
+                <p style="margin-top: 2rem; font-style: italic;">— Mory Sacko</p>
+            </div>
+            <div>
+                <img src="https://images.squarespace-cdn.com/content/v1/6864377a6705f53a7182c13a/ee40c869-a185-4485-8fb4-2e0078f7fae0/3+cropped.jpg" style="width: 100%; object-fit: cover;" alt="Culinary details">
+            </div>
+        </div>
+        
+        <div class="text-centered" style="margin-top: 8vw;">
+            <img src="https://images.squarespace-cdn.com/content/v1/6864377a6705f53a7182c13a/aa6aeab1-7eb7-4562-a5b2-ffd6f859b037/4+cropped.jpg" style="width: 100%; max-width: 600px;" alt="Chef at work">
+        </div>
+    </section>
+
+    <!-- 9. 5 BLOCCHI SIMBOLO -->
+    <section class="section" style="padding-top: 0;">
+        <!-- ~ -->
+        <div class="sense-block fade-in">
+            <div class="sense-symbol">~</div>
+            <div class="sense-text lang-text" data-fr="Gbofloto, Le parfum du matin, le petit-déjeuner partagé, l’âme du street food" data-en="Gbofloto, The scent of morning, a shared breakfast, the soul of street food">Gbofloto, Le parfum du matin, le petit-déjeuner partagé, l’âme du street food</div>
+            <video class="sense-video" src="videos/video1.mp4" autoplay loop muted playsinline></video>
+        </div>
+
+        <!-- ⟡ -->
+        <div class="sense-block fade-in">
+            <div class="sense-symbol">⟡</div>
+            <div class="sense-text lang-text" data-fr="Observer la succession d'assiettes colorées" data-en="Observing a succession of colourful plates">Observer la succession d'assiettes colorées</div>
+            <video class="sense-video" src="videos/video2.mp4" autoplay loop muted playsinline></video>
+        </div>
+
+        <!-- ⋒ -->
+        <div class="sense-block fade-in">
+            <div class="sense-symbol">⋒</div>
+            <div class="sense-text lang-text" data-fr="Écouter la bande-son du restaurant" data-en="Listening to the restaurant's soundtrack">Écouter la bande-son du restaurant</div>
+            <div class="spotify-embed">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0SM0LYsmbMT?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- ⁂ -->
+        <div class="sense-block fade-in">
+            <div class="sense-symbol">⁂</div>
+            <div class="sense-text lang-text" data-fr="Toucher du doigt une gastronomie réinventée" data-en="Touching a reinvented gastronomy">Toucher du doigt une gastronomie réinventée</div>
+            <video class="sense-video" src="videos/video3.mp4" autoplay loop muted playsinline></video>
+        </div>
+
+        <!-- ∴ -->
+        <div class="sense-block fade-in">
+            <div class="sense-symbol">∴</div>
+            <div class="sense-text lang-text" data-fr="Goûter une cuisine culturellement riche" data-en="Tasting a culturally rich cuisine">Goûter une cuisine culturellement riche</div>
+            <video class="sense-video" src="videos/video4.mp4" autoplay loop muted playsinline></video>
+        </div>
+    </section>
+
+    <!-- 10. LE SERVICE -->
+    <section class="section fade-in">
+        <h2 class="title" style="margin-bottom: 2rem;">Le service Suru</h2>
+        <div class="text-centered" style="margin-bottom: 4rem;">
+            <p>Une équipe attentive et passionnée, orchestrant chaque instant pour faire de votre repas une expérience suspendue dans le temps.</p>
+        </div>
+        <img src="images/service.jpg" class="full-width-img" alt="Le chef et son équipe en service">
+    </section>
+
+    <!-- 11. BIO CHEF -->
+    <section class="section fade-in two-cols">
+        <div>
+            <img src="https://images.squarespace-cdn.com/content/v1/6864377a6705f53a7182c13a/5ffae02c-eb2b-480e-b539-be8a65f9da51/chef.jpg" style="width: 100%; display: block;" alt="Aïcha Koné">
+        </div>
+        <div>
+            <h2 class="title" style="text-align: left; margin-bottom: 1.5rem;">Aïcha Koné</h2>
+            <p style="margin-bottom: 2rem;">Entrepreneure visionnaire et engagée, Aïcha Koné a bâti plusieurs projets innovants entre l'Afrique et l'Europe. Son parcours incarne le leadership, l'audace et l'impact social.</p>
+            <ul style="list-style: none; font-size: 0.95rem; line-height: 2;">
+                <li>— Fondatrice de plusieurs entreprises à succès</li>
+                <li>— Lauréate du Prix de l'Entrepreneuriat Féminin</li>
+                <li>— Conférencière internationale</li>
+                <li>— Mentore pour les jeunes entrepreneures</li>
+                <li>— Reconnue parmi les leaders africaines inspirantes</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 12. OFFRE (Dark Section) - 3D Menu Book -->
+    <section id="offre" class="section fade-in dark-section" style="display:flex; flex-direction: column; align-items: center; overflow: hidden;">
+        <div style="margin-bottom: 4rem; text-align: center;">
+            <h2 class="title" style="margin:0;">L'Offre Suru</h2>
+        </div>
+        <div class="book-container">
+            <button class="nav-btn" id="btnLeft" onclick="goBack()">‹</button>
+            <div class="book" id="book">
+                
+                <div class="sheet" id="cover" onclick="if(bookState===0) goForward()">
+                    <div class="face front cover-front">
+                        <div class="cover-content">
+                            <h1>SURU<br>restaurant</h1>
+                            <div class="cover-subtitle">Menu degustazione</div>
+                            <div class="cover-year">2026</div>
+                            <div class="cover-hint">Apri &rarr;</div>
+                        </div>
+                    </div>
+                    <div class="face back left-page">
+                        <div class="page-content">
+                            <h2 class="menu-section-title">APPETIZERS</h2>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Mano di Fatima*</span><span class="menu-item-price">21,00€</span></div>
+                                <div class="menu-item-desc">Piatto da condividere con un mix di specialità per un assaggio completo della cucina africana: nem a scelta, abolo, alloco, patate dolci, fataya (1,2,3,7)</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Nem (4 pezzi)*</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Involtini croccanti ripieni di manzo o pollo e verdure speziate, un boccone fragrante e saporito (1, 2, 6). Vegetariani mini (6 pezzi): 5,00€</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Insalata di platano</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Platano fritto a cubetti, condito con pomodori freschi e cipolla rossa, un mix dolce e saporito, leggero e colorato</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Abolo (4 pezzi)*</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Soffice tortino di mais fermentato cotto al vapore, leggermente dolce tipico della cucina dell'Africa occidentale (1)</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Fataya (4 pezzi)*</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Fagottino dorato ripieno di tonno, croccante fuori e saporito dentro, tipico street food dell'Africa occidentale (1, 3, 7)</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Alloco</span><span class="menu-item-price">5,00€</span></div>
+                                <div class="menu-item-desc">Fette di platano maturo fritte, dolci e dorate, servite come contorno</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Patatine di igname</span><span class="menu-item-price">5,00€</span></div>
+                                <div class="menu-item-desc">Radice dolce e farinosa, tagliata e fritta come patate croccanti, ricca di fibre e vitamine, ideale per energia e digestione</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Patate dolci fritte*</span><span class="menu-item-price">5,00€</span></div>
+                                <div class="menu-item-desc">Tubero dolce e croccante, leggermente panato ricco di fibre e vitamine, servito caldo come contorno sfizioso (1)</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Tris di fritti</span><span class="menu-item-price">12,00€</span></div>
+                                <div class="menu-item-desc">Croccante selezione di patate dolci, alloco e patate di igname, un mix dorato e saporito da condividere (1)</div>
+                            </div>
+
+                            <h2 class="menu-section-title">PIATTI UNICI</h2>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Dibi <span style="font-size:10px;font-style:italic;">solo sabato</span></span><span class="menu-item-price">35,00€</span></div>
+                                <div class="menu-item-desc">Agnello grigliato e speziato, tagliato a pezzi e servito al centro tavola per massimo 4 persone, un piatto conviviale della tradizione senegalese</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Attieké*</span><span class="menu-item-price">20,00€</span></div>
+                                <div class="menu-item-desc">Semola di manioca servita con tilapia grigliata e platano fritto (4). Versione vegetariana: 13€</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Tchep Djen</span><span class="menu-item-price">16,00€</span></div>
+                                <div class="menu-item-desc">Riso cotto in salsa di pomodoro con pesce tilapia e verdure, ricco e saporito (4). Versione vegetariana: 12€</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Yassa Pollo</span><span class="menu-item-price">15,00€</span></div>
+                                <div class="menu-item-desc">Pollo marinato con limone, cipolle e spezie, cotto lentamente fino a diventare tenero e saporito, servito con riso bianco e olive verdi (10)</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Mafé</span><span class="menu-item-price">13,00€</span></div>
+                                <div class="menu-item-desc">Ricca salsa di arachidi con pomodoro, carne di manzo cotta con un mix di spezie (5). Versione vegetariana: 10€</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Garba*</span><span class="menu-item-price">13,00€</span></div>
+                                <div class="menu-item-desc">Attieké con tonno fritto, cipolla, pomodoro e peperoncino, uno dei piatti street food più amati della Costa d'Avorio (4)</div>
+                            </div>
+                            
+                            <div class="page-number">1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sheet" id="sheet2">
+                    <div class="face front right-page">
+                        <div class="page-content" onclick="if(bookState===1) goForward()">
+                            <h2 class="menu-section-title">DRINKS & MOCKTAILS</h2>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Bissap</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Bevanda rinfrescante a base di fiori di ibisco, dolce e leggermente acidula, ricca di antiossidanti e vitamina C</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Bouye</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Bevanda dolce e cremosa a base di frutto del baobab e latte condensato, ricca di vitamine, minerali e antiossidanti (7)</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Gnamakoudji</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Bevanda speziata e agrumata a base di zenzero fresco e ananas, stimola la digestione e rinforza le difese immunitarie</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Soft Drink</span><span class="menu-item-price">4,00€</span></div>
+                                <div class="menu-item-desc">Acqua, Coca Cola, Fanta, Sprite, ecc...</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">WWW</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Lime, fragola, arancia, menta, ginger, soda</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Diva</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Passion fruit, succo di pesca, succo di mela</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Coco Chanel</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Ananas, cocco, fragola, latte di riso</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Black Panther</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">The nero, fiori di sambuco, rosmarino</div>
+                            </div>
+
+                            <h2 class="menu-section-title">SHISHA</h2>
+                            <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">LOVE</span><span class="menu-item-price">20,00€</span></div></div>
+                            <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">MENTA</span><span class="menu-item-price">15,00€</span></div></div>
+                            <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">MELA</span><span class="menu-item-price">15,00€</span></div></div>
+                            
+                            <div class="page-number">2</div>
+                        </div>
+                    </div>
+                    <div class="face back left-page">
+                        <div class="page-content">
+                            <h2 class="menu-section-title">DRINK DELLA TRADIZIONE</h2>
+                            <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Bissap</span><span class="menu-item-price">6,00€</span></div></div>
+                            <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Bouye</span><span class="menu-item-price">6,00€</span></div></div>
+                            <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Gnamakoudji</span><span class="menu-item-price">6,00€</span></div></div>
+                            <div class="menu-item"><div class="menu-item-header"><span class="menu-item-name">Soft Drink</span><span class="menu-item-price">4,00€</span></div></div>
+
+                            <h2 class="menu-section-title">DESSERTS</h2>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Thiackry</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Dessert fresco a base di cous cous fine e yogurt dolce, profumato con vaniglia e spezie (7)</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Tiramisù Classico</span><span class="menu-item-price">6,00€</span></div>
+                                <div class="menu-item-desc">Savoiardi al caffè, crema setosa al mascarpone, cacao amaro. Un equilibrio profondo, essenziale e senza tempo (1, 3, 7)</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Mousse di Cocco*</span><span class="menu-item-price">8,00€</span></div>
+                                <div class="menu-item-desc">Dolcetto fresco al sapore di cocco su base di biscotto (1, 4, 7)</div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-header"><span class="menu-item-name">Tiramisù al Bissap</span><span class="menu-item-price">8,00€</span></div>
+                                <div class="menu-item-desc">Variante fresca e fruttata, dove il carattere vibrante del bissap incontra la delicatezza della crema. (1, 3, 7)</div>
+                            </div>
+                            
+                            <div class="page-number">3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sheet static-back" id="sheet3">
+                    <div class="face front right-page">
+                        <div class="page-content" style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                            <h2 class="menu-section-title" style="border:none;">SURU</h2>
+                            <p style="font-size: 13px; font-style:italic; opacity: 0.7;">Grazie per la visita</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="nav-btn" id="btnRight" onclick="goForward()">›</button>
+        </div>
+    </section>
+
+    <!-- 13. RESERVATION -->
+    <section id="reservation" class="section fade-in">
+        <div class="zenchef-container fade-in">
+            <iframe src="https://bookings.zenchef.com/results?rid=356054&fullscreen=1" title="Zenchef Booking Widget"></iframe>
+        </div>
+    </section>
+
+    <!-- 14. CONTACT -->
+    <section id="contact" class="section fade-in" style="padding-bottom: 0;">
+        <div class="omotenashi-block fade-in">
+            <span class="lang-text" data-fr="Akwaaba — C'est un mot très utilisé en Côte d'Ivoire, qui provient de la langue twi, parlée au Ghana. Il signifie &quot;Bienvenue&quot;." data-en="Akwaaba — A widely used word in Ivory Coast, originating from the Twi language spoken in Ghana. It means &quot;Welcome&quot;.">
+                Akwaaba — C'est un mot très utilisé en Côte d'Ivoire, qui provient de la langue twi, parlée au Ghana. Il signifie "Bienvenue".
+            </span>
+        </div>
+
+        <div class="text-centered fade-in" style="margin: 6rem auto;">
+            <a href="#reservation" class="cta-link label-uppercase lang-text" style="margin-bottom: 3rem;" data-fr="Réserver une table" data-en="Book a table">Réserver une table</a>
+            <p>Via Dei Pescatori 39<br>Lecco</p>
+            <p style="margin-top: 2rem;">
+                <a href="mailto:contact@suru-restaurant.com">contact@suru-restaurant.com</a><br>
+                <a href="tel:+33143202139">+33 1 43 20 21 39</a>
+            </p>
+            <p style="margin-top: 2rem;">
+                <a href="https://www.instagram.com/suru.restaurant/" target="_blank" class="cta-link">Instagram</a>
+            </p>
+        </div>
+        
+        <div class="omotenashi-block fade-in" style="margin-bottom: 0;">
+            <span class="lang-text" data-fr="Akwaaba — C'est un mot très utilisé en Côte d'Ivoire, qui provient de la langue twi, parlée au Ghana. Il signifie &quot;Bienvenue&quot;." data-en="Akwaaba — A widely used word in Ivory Coast, originating from the Twi language spoken in Ghana. It means &quot;Welcome&quot;.">
+                Akwaaba — C'est un mot très utilisé en Côte d'Ivoire, qui provient de la langue twi, parlée au Ghana. Il signifie "Bienvenue".
+            </span>
+        </div>
+    </section>
+
+    <!-- 15. FOOTER -->
+    <footer class="fade-in">
+        <img src="https://images.squarespace-cdn.com/content/v1/6864377a6705f53a7182c13a/970992d6-6838-4695-a213-0f710e9e42b0/logo.gif" alt="Suru Logo Loop" style="max-width: 180px;">
+        
+        <form class="newsletter-form" id="newsletter-form">
+            <input type="email" placeholder="Email" required aria-label="Email for newsletter">
+            <button type="submit">Envoyer</button>
+            <span id="newsletter-msg" style="display:none; font-style: italic; color: #888; font-family: var(--font-title); font-size: 1.2rem; margin-left: 1rem;">Thank you!</span>
+        </form>
+
+        <div class="footer-links">
+            <a href="/protection-des-donnees">Protection des données</a>
+            <a href="/mentions-legales">Mentions légales</a>
+            <a href="mailto:contact@mory-sacko.fr">Presse et partenariats</a>
+            <a href="https://www.yorgo.co/" target="_blank" rel="noopener">Identité visuelle</a>
+            <a href="https://www.plume-redaction.com/" target="_blank" rel="noopener">Éditorial</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // --- Language Toggle Logic ---
+        let currentLang = 'fr';
+        const langToggleBtns = document.querySelectorAll('.lang-toggle');
+        const langElements = document.querySelectorAll('.lang-text');
+
+        function updateLanguage() {
+            // Update button texts
+            const displayLang = currentLang === 'fr' ? 'EN' : 'FR';
+            langToggleBtns.forEach(btn => btn.textContent = displayLang);
+            
+            // Update all elements with data attributes
+            langElements.forEach(el => {
+                const newText = el.getAttribute(`data-${currentLang}`);
+                if(newText) el.textContent = newText;
+            });
+        }
+
+        langToggleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentLang = currentLang === 'fr' ? 'en' : 'fr';
+                updateLanguage();
+            });
+        });
+
+        // --- Navbar Scroll Effect ---
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // --- Hamburger & Mobile Drawer ---
+        const hamburger = document.getElementById('hamburger');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileDrawer.classList.toggle('open');
+            document.body.style.overflow = mobileDrawer.classList.contains('open') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // --- Intersection Observer for Fade-in Animations ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // --- Time and Temperature Logic ---
+        function updateTime() {
+            const now = new Date();
+            const options = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' };
+            const timeStr = now.toLocaleTimeString('fr-FR', options);
+            // Placeholder per temperatura come richiesto (statico 14°C)
+            document.getElementById('time-temp-display').textContent = `${timeStr} / 14°C`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // --- Newsletter Form Submission ---
+        const newsletterForm = document.getElementById('newsletter-form');
+        const newsletterMsg = document.getElementById('newsletter-msg');
+        
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            newsletterMsg.style.display = 'inline-block';
+            newsletterForm.querySelector('input').value = '';
+            setTimeout(() => {
+                newsletterMsg.style.display = 'none';
+            }, 3000);
+        });
+
+        // --- 3D Book Menu Logic ---
+        let bookState = 0;
+        const cover = document.getElementById('cover');
+        const sheet2 = document.getElementById('sheet2');
+        const sheet3 = document.getElementById('sheet3');
+        const btnLeft = document.getElementById('btnLeft');
+        const btnRight = document.getElementById('btnRight');
+
+        function goForward() {
+            if (bookState === 0) {
+                cover.classList.add('flipping');
+                cover.classList.add('flipped');
+                cover.style.zIndex = '4';
+                setTimeout(() => cover.style.zIndex = '1', 600);
+                bookState = 1;
+            } else if (bookState === 1) {
+                sheet2.classList.add('flipping');
+                sheet2.classList.add('flipped');
+                sheet2.style.zIndex = '4';
+                setTimeout(() => sheet2.style.zIndex = '2', 600);
+                bookState = 2;
+            }
+            updateNav();
+        }
+
+        function goBack() {
+            if (bookState === 2) {
+                sheet2.style.zIndex = '4';
+                sheet2.classList.remove('flipped');
+                setTimeout(() => {
+                    sheet2.classList.remove('flipping');
+                    sheet2.style.zIndex = '2';
+                }, 600);
+                bookState = 1;
+            } else if (bookState === 1) {
+                cover.style.zIndex = '4';
+                cover.classList.remove('flipped');
+                setTimeout(() => {
+                    cover.classList.remove('flipping');
+                    cover.style.zIndex = '3';
+                }, 600);
+                bookState = 0;
+            }
+            updateNav();
+        }
+
+        function updateNav() {
+            btnLeft.style.opacity  = bookState > 0 ? '0.6' : '0';
+            btnRight.style.opacity = bookState < 2 ? '0.6' : '0';
+            btnLeft.style.pointerEvents  = bookState > 0 ? 'auto' : 'none';
+            btnRight.style.pointerEvents = bookState < 2 ? 'auto' : 'none';
+        }
+        
+        // Init book
+        if (cover && sheet2 && sheet3) {
+            cover.style.zIndex = '3';
+            sheet2.style.zIndex = '2';
+            sheet3.style.zIndex = '1';
+            updateNav();
+        }
+    </script>
+
+    <!-- FILM GRAIN OVERLAY -->
+    <script>
+    (function() {
+        const GRAIN_OPACITY = 0.08;
+        const GRAIN_SIZE    = 1;
+        const FPS_CAP       = 24;
+
+        var canvas = document.createElement('canvas');
+        canvas.id = 'film-grain';
+        canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:' + GRAIN_OPACITY + ';';
+        document.body.appendChild(canvas);
+
+        var ctx = canvas.getContext('2d');
+        var w, h;
+
+        function resize() {
+            w = canvas.width  = Math.ceil(window.innerWidth  / (GRAIN_SIZE * 2));
+            h = canvas.height = Math.ceil(window.innerHeight / (GRAIN_SIZE * 2));
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        var last = 0;
+        var interval = 1000 / FPS_CAP;
+
+        function renderGrain(now) {
+            requestAnimationFrame(renderGrain);
+            if (now - last < interval) return;
+            last = now;
+
+            var imageData = ctx.createImageData(w, h);
+            var d = imageData.data;
+            for (var i = 0, len = d.length; i < len; i += 4) {
+                var v = (Math.random() * 255) | 0;
+                d[i] = v;
+                d[i+1] = v;
+                d[i+2] = v;
+                d[i+3] = (Math.random() * 150) | 0;
+            }
+            ctx.putImageData(imageData, 0, 0);
+        }
+        requestAnimationFrame(renderGrain);
+    })();
+    </script>
+
+</body>
+</html>
