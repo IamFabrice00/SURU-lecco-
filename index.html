@@ -1226,26 +1226,15 @@
             observer.observe(element);
         });
 
-        // --- Video Lazy Loading ---
-        const videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const video = entry.target;
-                if (entry.isIntersecting) {
-                    if (!video.src) {
-                        video.src = video.dataset.src;
-                        video.load();
-                    }
+        // --- Continuous Video Autoplay & Loop ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.sense-video').forEach(video => {
+                    video.src = video.dataset.src;
+                    video.load();
                     video.play().catch(err => {});
-                } else {
-                    if (video.src) {
-                        video.pause();
-                    }
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.sense-video').forEach(video => {
-            videoObserver.observe(video);
+                });
+            }, 1000); // 1-second delay to keep the initial page load instantaneous
         });
 
         // --- Time and Temperature Logic ---
